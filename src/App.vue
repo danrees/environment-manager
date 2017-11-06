@@ -2,11 +2,11 @@
   <div id="app">
     <h1>Not default anymore</h1>
     <span>{{msg}}</span>
-    <div>{{newEnv}}</div>
-    <input placeholder="Put an environment name here" v-model="newEnv">
+    <div>{{newEnv.name}}</div>
+    <input placeholder="Put an environment name here" v-model="newEnv.name">
     <button v-on:click="addEnv">Add Environment</button>
     <ul>
-      <li v-for="env in environments" :key="env">{{ env }}</li>
+      <li v-for="env in environments" :key="env.id">{{ env.name }}-{{ env.owner}}</li>
     </ul>
     
   </div>
@@ -18,12 +18,13 @@ export default {
   props: ['msg'],
   data() {
     return {
-      newEnv: 'Starting'
+      owner: "bob",
+      newEnv: {name: "starting"}
     }
   },
   methods: {
     addEnv: function(event){
-      this.$store.commit('add',this.newEnv);
+      this.$store.commit('add',{name: this.newEnv.name, id: this.newEnv.id, owner: this.owner});
     }
   },
   computed: {

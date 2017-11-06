@@ -9,7 +9,13 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    environments: ["default environment"]
+    environments: [
+      {
+        name: "default",
+        id: "default",
+        owner: "bob"
+      }
+    ]
   },
   mutations: {
     add(state,environment) {
