@@ -1,18 +1,14 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
+    <h1>Not default anymore</h1>
+    <span>{{msg}}</span>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
-
 export default {
   name: 'app',
-  components: {
-    HelloWorld
-  }
+  props: ['msg']
 }
 </script>
 
