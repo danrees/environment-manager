@@ -1,47 +1,54 @@
 <template>
-  <div id="app">
-    <h1>Not default anymore</h1>
-    <span>{{msg}}</span>
-    <div>{{newEnv.name}}</div>
-    <input placeholder="Put an environment name here" v-model="newEnv.name">
-    <button v-on:click="addEnv">Add Environment</button>
+  <div id="app" class="container">
+    <router-view :auth="auth" :authenticated="authenticated" ></router-view>
+    <h1 class="title is-1">Not default anymore</h1>
+    <button v-if="!authenticated" @click="login()">Login</button>
+    <button v-else @click="logout()">Logout</button>
+    <create-environment />
+    <div>
+      <h2 class="title is-3">Current Environments</h2>
     <ul>
-      <li v-for="env in environments" :key="env.id">{{ env.name }}-{{ env.owner}}</li>
+      <environment v-for="env in environments" :key="env.id" :env="env"></environment>
     </ul>
+    </div>
     
   </div>
 </template>
 
 <script>
+import CreateEnvironment from './components/CreateEnvironment'
+import Environment from './components/Environment'
+import AuthService from './auth/AuthService.js'
+
+const auth = new AuthService()
+const { login, logout, authenticated, authNotifier } = auth
+
 export default {
   name: 'app',
-  props: ['msg'],
-  data() {
+  data () {
+    authNotifier.on('authChange', authState => {
+      this.authenticated = authState.authenticated
+    })
     return {
-      owner: "bob",
-      newEnv: {name: "starting"}
-    }
-  },
-  methods: {
-    addEnv: function(event){
-      this.$store.commit('add',{name: this.newEnv.name, id: this.newEnv.id, owner: this.owner});
+      auth,authenticated
     }
   },
   computed: {
     environments() {
       return this.$store.state.environments;
     }
+  },
+  components: {
+    CreateEnvironment,
+    Environment
+  },
+  methods: {
+    login,logout
   }
+  
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
