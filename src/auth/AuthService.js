@@ -1,6 +1,7 @@
 import auth0 from 'auth0-js'
 import router from './../router'
 import EventEmitter from 'EventEmitter'
+import { AUTH_CONFIG } from './authcredentials'
 
 export default class AuthService {
     authenticated = this.isAuthenticated()
@@ -15,10 +16,10 @@ export default class AuthService {
     
 
 auth0 = new auth0.WebAuth({
-    domain: 'danrees.auth0.com',
-    clientID: 'OL63cm7qygOv1CyNyxGpljieq0JNhIdL',
-    redirectUri: 'http://localhost:8080/callback',
-    audience: 'https://danrees.auth0.com/userinfo',
+    domain: AUTH_CONFIG.domain,
+    clientID: AUTH_CONFIG.clientId,
+    redirectUri: AUTH_CONFIG.callBackUrl,
+    audience: `https://${AUTH_CONFIG.domain}/userinfo`,
     responseType: 'token id_token',
     scope: 'openid'
   });

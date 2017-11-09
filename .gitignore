@@ -1,2 +1,3 @@
 *.iml
 node_modules/
+src/auth/authcredentials.js
