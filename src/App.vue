@@ -1,23 +1,19 @@
 <template>
   <div id="app" class="container">
     <router-view :auth="auth" :authenticated="authenticated" ></router-view>
-    <h1 class="title is-1">Not default anymore</h1>
+    <h1 class="title is-2">Environment Manager</h1>
     <button v-if="!authenticated" @click="login()">Login</button>
     <button v-else @click="logout()">Logout</button>
-    <create-environment />
     <div>
-      <h2 class="title is-3">Current Environments</h2>
-    <ul>
-      <environment v-for="env in environments" :key="env.id" :env="env"></environment>
-    </ul>
+     
+    <environments />
     </div>
     
   </div>
 </template>
 
 <script>
-import CreateEnvironment from './components/CreateEnvironment'
-import Environment from './components/Environment'
+import Environments from './components/Environments'
 import AuthService from './auth/AuthService.js'
 
 const auth = new AuthService()
@@ -39,8 +35,7 @@ export default {
     }
   },
   components: {
-    CreateEnvironment,
-    Environment
+    Environments
   },
   methods: {
     login,logout
